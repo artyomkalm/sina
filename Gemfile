@@ -5,5 +5,6 @@ gem "json"
 
 group :test do
   gem "rack-test"
+  gem "minitest"
   gem "rake"
 end
