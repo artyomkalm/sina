@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 ruby '2.3.1'
 gem "sinatra"
 gem "sinatra-param", require: "sinatra/param"
+gem 'sinatra-cross_origin'
 gem "json"
 gem 'nokogiri'
 

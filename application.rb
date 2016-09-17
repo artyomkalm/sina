@@ -1,6 +1,7 @@
 require 'sinatra'
 require 'json'
 require "sinatra/param"
+require 'sinatra/cross_origin'
 require 'nokogiri'
 require 'open-uri'
 
@@ -16,6 +17,10 @@ def find_album(item)
     descr:   trycon(item.at_css('.album_desc')),
     link:    item['href'],
   }
+end
+
+configure do
+  enable :cross_origin
 end
 
 get '/greet' do
