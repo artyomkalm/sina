@@ -5,6 +5,8 @@ require 'sinatra/cross_origin'
 require 'nokogiri'
 require 'open-uri'
 
+EXCLUDED_ALBUMS = ['All photos', 'Все фотографии', 'Фотографии со страницы сообщества', 'Logo pictures']
+
 def trycon(item)
   item ? item.content : nil
 end
@@ -51,8 +53,7 @@ get '/vkalbum' do
   ended = []
   doc.css('.album_item').each do |item|
     name = trycon(item.at_css('.album_name'))
-    if name == 'Все фотографии' || name == 'Фотографии со страницы сообщества' || ended.include?(name)
-    else
+    if !EXCLUDED_ALBUMS.include?(name)
       ended << name
       threads << Thread.new do
         albums_array << find_album(item)
