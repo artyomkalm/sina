@@ -43,6 +43,7 @@ end
 get '/vkalbum' do
   content_type :json
   doc = Nokogiri::HTML(open('http://vk.com/albums-' + params[:album]))
+  excluded = params[:excluded].split('|')
   result = {}
   result[:uid] = params[:album]
   result[:albums] = {}
@@ -53,7 +54,7 @@ get '/vkalbum' do
   ended = []
   doc.css('.album_item').each do |item|
     name = trycon(item.at_css('.album_name'))
-    if !EXCLUDED_ALBUMS.include?(name)
+    if !EXCLUDED_ALBUMS.include?(name) && !excluded.include?(name)
       ended << name
       threads << Thread.new do
         albums_array << find_album(item)
